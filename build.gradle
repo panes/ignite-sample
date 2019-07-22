@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    // Ignite
+    compile group: 'org.apache.ignite', name: 'ignite-kubernetes', version: '2.7.0'
+    //compile group: 'org.apache.ignite', name: 'ignite-spring', version: "$igniteVersion"
+    compile group: 'org.apache.ignite', name: 'ignite-core', version: '2.7.0'
+
+    // Test
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+}
