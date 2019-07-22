@@ -20,7 +20,7 @@ class MyIgniteLoadRunnerTest {
     }
 
     @Test
-    void put10kVerySmallData() throws InterruptedException {
+    void run() throws InterruptedException {
         final int maxAttempts = 30;
         int counter = 1;
         while(counter <= maxAttempts) {
@@ -49,11 +49,8 @@ class MyIgniteLoadRunnerTest {
         System.out.println("[" + name + "] Total Memory used expected: " + (memoryUsed * size) + " octets");
 
         for (int i = 0; i < size; i++) {
-            //long start = System.nanoTime();
             final DummyData dummyData = new DummyData(UUID.randomUUID().toString(), data);
             getDummyCache().put(dummyData.getKey(), dummyData);
-            //long end = System.nanoTime();
-            //LOGGER.info("Data(UID=" + dummyData.getKey() + "): " + (end-start)/1000/1000+"ms");
         }
 
         Thread.sleep(2000);
@@ -82,6 +79,17 @@ class MyIgniteLoadRunnerTest {
         Thread.sleep(expiryTimeInMillis);
         long actualCacheSize = getActualCacheSize();
         System.out.println("[" + name + "] Final cache size " + actualCacheSize);
+
+        if(0L != actualCacheSize) { // Not removed all data, let some extra time to clean expired data by the thread.
+            int nbRetries = 0;
+            while (0L != actualCacheSize && nbRetries < 2) {
+                Thread.sleep(expiryTimeInSec * 1000);
+                actualCacheSize = getActualCacheSize();
+                System.out.println("[" + name + "] Final cache size with extra time (" + nbRetries + "): " + actualCacheSize);
+                nbRetries++;
+            }
+        }
+
         assertThat(actualCacheSize).isEqualTo(0L);
         return true;
     }
