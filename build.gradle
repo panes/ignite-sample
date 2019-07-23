@@ -8,10 +8,12 @@ repositories {
 }
 
 dependencies {
+    // Ignite local snapshots
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
     // Ignite
-    compile group: 'org.apache.ignite', name: 'ignite-kubernetes', version: '2.7.0'
-    //compile group: 'org.apache.ignite', name: 'ignite-spring', version: "$igniteVersion"
-    compile group: 'org.apache.ignite', name: 'ignite-core', version: '2.7.0'
+    //compile group: 'org.apache.ignite', name: 'ignite-kubernetes', version: '2.7.5'
+    //compile group: 'org.apache.ignite', name: 'ignite-core', version: '2.7.5'
 
     // Test
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'

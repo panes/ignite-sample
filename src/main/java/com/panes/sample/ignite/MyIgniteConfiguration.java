@@ -10,7 +10,6 @@ import org.apache.ignite.internal.marshaller.optimized.OptimizedMarshaller;
 import org.apache.ignite.spi.communication.tcp.TcpCommunicationSpi;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.TcpDiscoveryIpFinderAdapter;
-import org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.vm.TcpDiscoveryVmIpFinder;
 
 import javax.cache.expiry.Duration;
@@ -25,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 import static org.apache.ignite.IgniteSystemProperties.IGNITE_UPDATE_NOTIFIER;
 
 public class MyIgniteConfiguration {
-    enum TcpDiscoveryMode {
+    public enum TcpDiscoveryMode {
         DIRECT_IP {
             @Override
             public TcpDiscoveryIpFinderAdapter ipFinder() {
